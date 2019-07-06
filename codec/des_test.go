@@ -1,0 +1,15 @@
+package codec
+
+import (
+	"encoding/base64"
+	"testing"
+)
+
+func TestDES(t *testing.T) {
+	s := []byte("16310120537")
+	println(base64.StdEncoding.EncodeToString(DesEncrypt(s, "UN")))
+	data, _ := base64.StdEncoding.DecodeString("nDMO9VYNR0ve910qFg+6zg==")
+	println(string(DesDecrypt(data, "PW")))
+	data, _ = base64.StdEncoding.DecodeString("mjS2QuhwzbPrAnGL/ZKnRAprCzenNILheQqj323iiLO/MDX7tbXYpWklFHPdJPweo8Z3h5HHMwQ1uKjZABt+tqQnDbjZhRZAkmYAI66jV7efbotkC+W141fHVsTvwD6twiEsOcr3+dZeTafrBPOKZzAHEpHALb0EAt3tWyZR2vhs8IHzYgOF47Ig2s75Pj0OG03HX6RfuT8C9afelEbrRCdVLqOaDp/erq5L1VqKKAKFQNyVIJUbPzfcRZyOHselZpSGhHSx8taiHM6B3dV76NS5GranCjaHWmapDELnn2XqhQxehWUjSObAW2j7u/PCuNRG7/76DOTEduFRyxw+/v9fDxBIg10+zzSjNxWTppUr2mTr1KdWNOdA+zgihqPqnTjDZoCUqak/8NEmMI4HIprRY7wWtO8RLmVJmboRl3T7B87R5NtjZGvh4Pq/FUaWjj6lnyY9Dp7inz/mUM4YozxKFk4ARQSkLuOKZzG46dLscCnTfxQETxojBPrJ7/U95468pF9YWfvUX7topPxUSwwH540xQAtB2UKXn0G/tTDZC+nKZBrlZsHu+Za3grY+OO7+jXSFA1n4B+idWm+Hmpiipuja0orlir+7gYHd9T1lmL/bbV5RlPPItrjTJC3zNjE5nh8a3od1do73ZeDly2xAUlTeMYdeOKYSSchH1cESGu8Dg2qs4sCea9h+0hdwMPBD/CsZlHLB7CzRkx7yACyeRYaiRa/uJ/deHj8yveVQfN2eNlHkZePwuJCYrOGuBjPttc0S2CyJr7MF664NQsXcT1CQxHsS8KEMmDwUqjK97iSYEMIJWu4BLUwSDzJ2mXUWueCf6KmcTaEsTA4wmhW/iFAKEVTjK23CqUoPQqY2mhGtyaoBudKkOseVMuvxUsCnOs9xxAwqkyFSOr/qSCp/dToe3yP7nl1H502eU8X3o+xcf8BbxTJh/XVsm6uhThW+Ir6Badp+WAdPaeDBwbJ/+vuIDYIF46/ESJ+RJOgWcl7NZ9VN3uAXZyYZqZPswX4/X8u2nMOcibLJHe+aNuBnI6kZmDdsaPD4dzFzdVnOYJ0x8d+lO9mb54wG2/EuLBQk3AoAo95Yx7Nru4ovLr0wGP+8od2jdy2YTKgN3OBqB8oJnOruABunQ/H+qdLBwURTvNG2oUJMZuFcridr+yy/3F6cCvc7SwSZ3Q/UxtGfo3dHg51BEWJ8mYQxN3QclrbIqCZIMYY=")
+	println(string(DesDecrypt(data, "DESKTOP-TRC1UO0")))
+}
