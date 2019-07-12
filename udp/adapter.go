@@ -1,7 +1,6 @@
 package udp
 
 import (
-	"crypto/rsa"
 	"net"
 	"strings"
 
@@ -10,7 +9,7 @@ import (
 )
 
 // LinkStart 开启 UDP
-func LinkStart(password, rsaPublicKey string, rsaPrivateKey *rsa.PrivateKey) {
+func LinkStart(password, rsaPublicKey string) {
 	conn, _ := net.DialUDP("udp4", config.SrcEP, config.DstEP)
 	EP := strings.SplitN(conn.LocalAddr().String(), ":", 2)
 	ipAddr, port := EP[0], EP[1]
@@ -18,14 +17,14 @@ func LinkStart(password, rsaPublicKey string, rsaPrivateKey *rsa.PrivateKey) {
 	// defer conn.Close()
 
 	loginInfo = &types.LoginInfo{
-		UserID: config.UserID,
+		UserID: config.Dict.UserID,
 		UserPW: password,
-		IP:     "10.98.38.92",
-		MAC:    config.MAC,
-		ADPID:  config.AdpID,
+		IP:     config.ClientIP,
+		MAC:    config.Dict.MAC,
+		ADPID:  config.Dict.AdpID,
 		T:      types.Tick(),
 		Port:   port,
-		CName:  config.ComputerName,
+		CName:  config.Dict.ComputerName,
 		OSVer:  config.OSVer,
 		RSA:    rsaPublicKey,
 		MD5:    config.CCMD5,
@@ -40,9 +39,9 @@ func LinkStart(password, rsaPublicKey string, rsaPrivateKey *rsa.PrivateKey) {
 func receiver(conn *net.UDPConn) {
 	data := make([]byte, 1024) // 接收缓存
 	for {
-		conn.Read(data) // 收到的字节数
-		println("<<<")
-		parse(data)
+		n, _ := conn.Read(data) // 收到的字节数
+		// println("<<<")
+		go parse(data[:n])
 	}
 }
 

@@ -8,29 +8,28 @@ import (
 	"os"
 
 	"./codec"
-	"./types"
+	"./config"
 	"./udp"
 )
 
 func main() {
 	initail()
-	udp.LinkStart(password, rsaPublicKey, rsaPrivateKey)
+	udp.LinkStart(password, rsaPublicKey)
 	b := make([]byte, 1)
 	os.Stdin.Read(b)
 }
 
 func initail() {
 	// 读取用户状态 JSON
-	var dict types.UserState
-	userInfo, _ := ioutil.ReadFile("user.json")
+	userInfo, _ := ioutil.ReadFile(os.Args[2])
 
 	// 初始化全局状态
-	json.Unmarshal(userInfo, &dict)
-	password = dict.Password
-	rsaPublicKey = dict.PubKeyXML
+	json.Unmarshal(userInfo, &config.Dict)
+	password = config.Dict.Password
+	rsaPublicKey = config.Dict.PubKeyXML
 
 	// 从 PEM 私钥导出真正私钥
-	block, _ := pem.Decode([]byte(dict.PrivateKey))
+	block, _ := pem.Decode([]byte(config.Dict.PrivateKey))
 	if block == nil {
 		println("can't parse private key")
 		os.Exit(-1)

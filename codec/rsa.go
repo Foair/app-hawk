@@ -6,6 +6,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
+	"fmt"
 )
 
 // 公钥和私钥可以从文件中读取
@@ -22,21 +23,26 @@ asK9I4n6P+PszpuLyppEqvGiVNBvDdyUVsj6TWBNN9qiNjAxt4W2h/oAXIBuemwC
 // Priv 私钥
 var Priv *rsa.PrivateKey
 
-// RsaEncrypt 加密
-func RsaEncrypt(origData []byte) ([]byte, error) {
+// Pub 公钥
+var Pub *rsa.PublicKey
+
+func init() {
 	block, _ := pem.Decode(publicKey)
 	if block == nil {
 		println("abc")
-		return nil, errors.New("public key error")
+		panic(errors.New("public key error"))
 	}
 	pubInterface, err := x509.ParsePKIXPublicKey(block.Bytes)
 
 	if err != nil {
 		println("abc")
-		return nil, err
+		panic(err)
 	}
-	pub := pubInterface.(*rsa.PublicKey)
+	Pub = pubInterface.(*rsa.PublicKey)
+}
 
+// RsaEncrypt 加密
+func RsaEncrypt(origData []byte) ([]byte, error) {
 	round := len(origData) / 117
 	if len(origData)%117 != 0 {
 		round++
@@ -45,9 +51,9 @@ func RsaEncrypt(origData []byte) ([]byte, error) {
 	for i := 0; i < round; i++ {
 		var d []byte
 		if i == round-1 && 117*(i+1) > len(origData) {
-			d, _ = rsa.EncryptPKCS1v15(rand.Reader, pub, origData[117*i:len(origData)])
+			d, _ = rsa.EncryptPKCS1v15(rand.Reader, Pub, origData[117*i:len(origData)])
 		} else {
-			d, _ = rsa.EncryptPKCS1v15(rand.Reader, pub, origData[117*i:117*(i+1)])
+			d, _ = rsa.EncryptPKCS1v15(rand.Reader, Pub, origData[117*i:117*(i+1)])
 		}
 		buffer = append(buffer, d...)
 	}
@@ -57,5 +63,15 @@ func RsaEncrypt(origData []byte) ([]byte, error) {
 
 // RsaDecrypt 解密
 func RsaDecrypt(ciphertext []byte) ([]byte, error) {
-	return rsa.DecryptPKCS1v15(rand.Reader, Priv, ciphertext)
+	round := len(ciphertext) / 128
+	var buffer []byte
+	for i := 0; i < round; i++ {
+		var d []byte
+		d, err := rsa.DecryptPKCS1v15(rand.Reader, Priv, ciphertext[128*i:128*(i+1)])
+		if err != nil {
+			fmt.Println(err)
+		}
+		buffer = append(buffer, d...)
+	}
+	return buffer, nil
 }

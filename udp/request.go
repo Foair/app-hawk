@@ -2,6 +2,7 @@ package udp
 
 import (
 	"encoding/json"
+	"sync"
 	"time"
 
 	"../codec"
@@ -12,20 +13,33 @@ var loginInfo *types.LoginInfo // 记录登录信息
 var queue = make(chan []byte)
 var token uint64
 var waitTicker *time.Ticker
+var phase = 0 // 0 停止 1 Login() 运行中 2 Wait() 中 3 Keep() 中 4 错误
+var lock sync.Mutex
 
 // Login 登录发送请求
 func Login() {
-	ticker := time.NewTicker(time.Second * 10)
+	phase = 1
+	ticker := time.NewTicker(time.Second * 2)
 	for range ticker.C {
 		loginInfo.T = types.Tick() // 更新最新的时间戳
 		info, _ := json.Marshal(loginInfo)
 		enQueue(info)
+		if phase >= 2 {
+			ticker.Stop()
+			Wait()
+		}
 	}
 }
 
 // Wait 等待开网（点击登录之后） 30 秒内循环请求 30 次
 func Wait() {
-	waitTicker = time.NewTicker(time.Second)
+	lock.Lock()
+	if phase == 3 {
+		return
+	}
+	phase = 3
+	lock.Unlock()
+	waitTicker = time.NewTicker(time.Second * 10)
 	waitOrKeep(waitTicker, true)
 }
 
@@ -37,15 +51,15 @@ func Keep() {
 }
 
 func waitOrKeep(ticker *time.Ticker, wait bool) {
-	cnt := 0
+	// cnt := 0
 	for range ticker.C {
-		if wait {
-			cnt++
-			if cnt > 30 {
-				ticker.Stop()
-			}
-		}
-		keepInfo := types.KeepInfo{K: "Wait", T: types.Tick(), Token: token}
+		// if wait {
+		// 	cnt++
+		// 	if cnt > 30 {
+		// 		ticker.Stop()
+		// 	}
+		// }
+		keepInfo := types.KeepInfo{K: "KEEP", T: types.Tick(), Token: token}
 		info, _ := json.Marshal(keepInfo)
 		enQueue(info)
 	}

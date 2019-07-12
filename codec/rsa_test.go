@@ -1,8 +1,11 @@
 package codec
 
 import (
+	"crypto/x509"
 	"encoding/base64"
+	"encoding/pem"
 	"fmt"
+	"os"
 	"testing"
 )
 
@@ -18,8 +21,35 @@ import (
 // 	fmt.Println(len(enc))
 // }
 
+var private = []byte(`
+-----BEGIN RSA PRIVATE KEY-----
+MIICXQIBAAKBgQCjkUQA1TdwPpa3HsEDE9/C3ZRxFTg0gTNkPyoSjHGmNfR5HL1s
+j1656xiE8TrW/oI5errdpodsvpsqm4d4uovvV/8Fa70lxfQ1i2nWQN4YNzH2xfni
+6ntAP8cXmvRCZKc5NtW6KhMls9397eubiDpIzUYS/gKwZp6uPF3NZkjmWwIDAQAB
+AoGADc3lulhETIHLwHqk+XiE6vI+Y+jRjITW7H/0MgqOUOO+1TXaur3C1dgEgrvF
+Jn3mSamU+b3jMgdIGylzHnpH8vF70gpzB8H9D/3lnUnzyKNSv4UCNW2bbCU1juQw
+S4fWEWjmi/OGNNOEESmnXumM0Rxx+4QTfewR1cqFeGSeKfECQQC5znYgCVLPZM+s
+7daEtubZnuvYS/NdO9mRDdwmiKr+Qu8tXk7Bbl6VznvYzkgjhDjy5/LdA3vZ6Uvs
+ozxrHbXpAkEA4VwLAHyY1C3UuPc/Bqr75uIC7rXUh7NPJAW8alJVQNPHAb0tYld3
+Ycekn6p3ryY5osaLmVYgtr8EhbsUVSqbowJAJCmFnfiSkGCrdpmXfZ7nUQV4G1G0
+3LlwP6X16d4BgZjfWfIX29eyOu/D9M85BQiP2N7ByrgJ28BnEXg3oxVWOQJBAKCR
+e0lKfX3YddOgXqi6lSbpbBt3NMnHSaEp8Rh0N0gsXIPxrW9/UJE7tSEKTaJfAvvm
+qTqEsmRi7671H8Sayi8CQQCL2ScpR6uDB1Xu4kc7MoPdiQoWLvmjvdOZfTw+E8yT
+IDDvjkD8dylB4vLKsV4M5MtyMbWvRORcyT+pnfyxFFwE
+-----END RSA PRIVATE KEY-----
+`)
+
 func TestEncrypt(T *testing.T) {
-	a := []byte("但是无论他怎样努力，终究事与愿违。他的父亲被弟弟钉死在茅坑，他的姐姐殚精竭虑想杀死弟弟，弟弟远走他乡，三个孩子都死于非命。他本来就不该在权力的中心，在政治，家族，爱情和梦想中，所有人都逼迫他作出选择，但是他从来都不是那个游戏者，时隔多年，他还是惦念着15岁白衣白甲的骑士少年。")
+	a := []byte("{\"K\":\"WAIT\",\"T\":636983611966492353,\"Token\":636983611883881450}")
 	b, _ := RsaEncrypt(a)
 	fmt.Println(base64.StdEncoding.EncodeToString(b))
+	// 从 PEM 私钥导出真正私钥
+	block, _ := pem.Decode(private)
+	if block == nil {
+		println("can't parse private key")
+		os.Exit(-1)
+	}
+	Priv, _ = x509.ParsePKCS1PrivateKey(block.Bytes)
+	c, _ := RsaDecrypt(b)
+	fmt.Println(string(c))
 }

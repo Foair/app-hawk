@@ -15,5 +15,5 @@ type KeepInfo struct {
 
 // UserState 用户状态信息
 type UserState struct {
-	Password, PubKeyXML, PrivateKey string
+	Password, PubKeyXML, PrivateKey, MAC, ComputerName, UserID, AdpID string
 }
