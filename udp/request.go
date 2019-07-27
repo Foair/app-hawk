@@ -19,15 +19,16 @@ var lock sync.Mutex
 // Login 登录发送请求
 func Login() {
 	phase = 1
-	ticker := time.NewTicker(time.Second * 2)
+	ticker := time.NewTicker(time.Second * 4)
 	for range ticker.C {
-		loginInfo.T = types.Tick() // 更新最新的时间戳
-		info, _ := json.Marshal(loginInfo)
-		enQueue(info)
 		if phase >= 2 {
 			ticker.Stop()
 			Wait()
+			// return
 		}
+		loginInfo.T = types.Tick() // 更新最新的时间戳
+		info, _ := json.Marshal(loginInfo)
+		enQueue(info)
 	}
 }
 

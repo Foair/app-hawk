@@ -6,6 +6,7 @@ package udp
 import (
 	"bytes"
 	"encoding/json"
+	"os"
 
 	"../codec"
 	"../system"
@@ -53,6 +54,9 @@ func oprate(res map[string]interface{}) {
 		if result {
 			phase = 2
 			Wait()
+		} else {
+			println("cert error")
+			os.Exit(-2)
 		}
 	case "WAIT":
 		// 开网（外网畅通）成功后
