@@ -6,9 +6,10 @@ package udp
 import (
 	"bytes"
 	"encoding/json"
-	"os"
+	"strings"
 
 	"../codec"
+	"../curl"
 	"../system"
 	"../types"
 )
@@ -41,11 +42,11 @@ func update(res map[string]interface{}) {
 		newT, _ := t.(json.Number).Int64()
 		token = uint64(newT) // 更新 Token
 	}
-	oprate(res)
+	operate(res)
 }
 
 // 从服务器返回的操作，是返回的操作
-func oprate(res map[string]interface{}) {
+func operate(res map[string]interface{}) {
 	method := res["K"].(string)
 	result := res["Result"].(bool)
 	switch method {
@@ -55,8 +56,11 @@ func oprate(res map[string]interface{}) {
 			phase = 2
 			Wait()
 		} else {
+			phase = 4
 			println("cert error")
-			os.Exit(-2)
+			tokenVerify := strings.SplitN(res["URL"].(string), "?", 1)[1]
+			curl.Start(tokenVerify)
+			// os.Exit(-2)
 		}
 	case "WAIT":
 		// 开网（外网畅通）成功后
