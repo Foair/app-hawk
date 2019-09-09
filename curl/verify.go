@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/cookiejar"
+	"os"
 	"time"
 
 	"../codec"
@@ -23,13 +24,16 @@ func Start(token string) {
 	}
 	ticker := time.NewTicker(time.Second * 10)
 	for range ticker.C {
+		println(">>>")
 		t := &res{}
 		r := req(client, "https://net.nsu.edu.cn/nsucweb/verifyphone.aspx?IsMobile=false", cookieStore)
 		json.Unmarshal(r, t)
 		if t.r == "1" {
 			ticker.Stop()
 			encoded, _ := base64.StdEncoding.DecodeString(t.key)
+			println(encoded)
 			codec.Priv = codec.XMLToPrivateKey(string(encoded))
+			os.Exit(2)
 		}
 	}
 }

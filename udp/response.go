@@ -4,14 +4,14 @@ package udp
 // 当相应请求被处理之后才交由上次调用函数
 
 import (
+	"../codec"
+	"../system"
+	"../types"
 	"bytes"
 	"encoding/json"
 	"strings"
 
-	"../codec"
 	"../curl"
-	"../system"
-	"../types"
 )
 
 func parse(cipher []byte) {
@@ -58,7 +58,8 @@ func operate(res map[string]interface{}) {
 		} else {
 			phase = 4
 			println("cert error")
-			tokenVerify := strings.SplitN(res["URL"].(string), "?", 1)[1]
+			println(res["URL"].(string))
+			tokenVerify := strings.SplitN(res["URL"].(string), "?", 2)[1]
 			curl.Start(tokenVerify)
 			// os.Exit(-2)
 		}

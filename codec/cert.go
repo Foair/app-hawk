@@ -7,15 +7,6 @@ import (
 	"math/big"
 )
 
-// 参考
-// https://gist.github.com/phemmer/fea012d087ff65819645
-
-/*
- * 由于根本没有导出 PEM 的必要，直接使用 Golang 中的私钥即可
- * 所以没有导出 PEM 的实现，实现见文档中
- * 之后也会在配置文件以及实现中完全移除 PEM
- */
-
 type xmlRsaKey struct {
 	Modulus, Exponent, P, Q, DP, DQ, InverseQ, D string
 }

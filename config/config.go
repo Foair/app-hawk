@@ -22,7 +22,7 @@ const (
 
 var (
 	// SrcEP 客户端 End Point
-	SrcEP = &net.UDPAddr{IP: net.IPv4zero, Port: 0}
+	SrcEP = &net.UDPAddr{IP: net.ParseIP(ClientIP), Port: 0}
 	// DstEP 服务端 End Point
 	DstEP = &net.UDPAddr{IP: net.ParseIP(ServerIP), Port: 8080}
 )

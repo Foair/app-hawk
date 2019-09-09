@@ -13,18 +13,18 @@ import (
 )
 
 func main() {
-	initail()
+	initial()
 	udp.LinkStart(password, rsaPublicKey)
 	b := make([]byte, 1)
-	os.Stdin.Read(b)
+	_, _ = os.Stdin.Read(b)
 }
 
-func initail() {
+func initial() {
 	// 读取用户状态 JSON
 	userInfo, _ := ioutil.ReadFile(os.Args[2])
 
 	// 初始化全局状态
-	json.Unmarshal(userInfo, &config.Dict)
+	_ = json.Unmarshal(userInfo, &config.Dict)
 	password = config.Dict.Password
 	rsaPublicKey = config.Dict.PubKeyXML
 
