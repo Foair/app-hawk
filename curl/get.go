@@ -9,7 +9,7 @@ import (
 	"net/http/cookiejar"
 	"time"
 
-	"../config"
+	"why.moe/hawk/config"
 )
 
 var reqEP *net.TCPAddr

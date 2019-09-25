@@ -3,7 +3,7 @@ package config
 import (
 	"net"
 
-	"../types"
+	"why.moe/hawk/types"
 )
 
 const (

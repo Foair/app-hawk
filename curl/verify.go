@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"../codec"
+	"why.moe/hawk/codec"
 )
 
 type res struct {

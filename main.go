@@ -7,9 +7,9 @@ import (
 	"io/ioutil"
 	"os"
 
-	"./codec"
-	"./config"
-	"./udp"
+	"why.moe/hawk/codec"
+	"why.moe/hawk/config"
+	"why.moe/hawk/udp"
 )
 
 func main() {

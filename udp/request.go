@@ -5,8 +5,8 @@ import (
 	"sync"
 	"time"
 
-	"../codec"
-	"../types"
+	"why.moe/hawk/codec"
+	"why.moe/hawk/types"
 )
 
 var loginInfo *types.LoginInfo // 记录登录信息

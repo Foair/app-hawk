@@ -4,14 +4,13 @@ package udp
 // 当相应请求被处理之后才交由上次调用函数
 
 import (
-	"../codec"
-	"../system"
-	"../types"
 	"bytes"
 	"encoding/json"
 	"strings"
-
-	"../curl"
+	"why.moe/hawk/codec"
+	"why.moe/hawk/curl"
+	"why.moe/hawk/system"
+	"why.moe/hawk/types"
 )
 
 func parse(cipher []byte) {

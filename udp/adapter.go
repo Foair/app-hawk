@@ -4,8 +4,8 @@ import (
 	"net"
 	"strings"
 
-	"../config"
-	"../types"
+	"why.moe/hawk/config"
+	"why.moe/hawk/types"
 )
 
 // LinkStart 开启 UDP
