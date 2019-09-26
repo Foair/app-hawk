@@ -14,11 +14,10 @@ script:
     --rm \
     -v "$PWD":/go/hawk \
     -w /go/hawk \
-    golang sh -c '
+    golang:1.13.1 sh -c '
       for GOOS in darwin linux; do
         for GOARCH in 386 amd64; do
           export GOOS GOARCH
           go build -v -o bin/hawk-$GOOS-$GOARCH
         done
       done'
-  - ls bin/*
