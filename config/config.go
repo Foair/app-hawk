@@ -15,9 +15,9 @@ const (
 	// OSVer 操作系统版本
 	OSVer = "Microsoft Windows NT 6.2.9200.0"
 	// CCVer CC 版本号
-	CCVer = "1.16.3.8013"
+	CCVer = "1.19.9.2509"
 	// CCMD5 CC MD5 校验
-	CCMD5 = "DB2F9160F56FC8AFD7AA12B8DDC8DA23"
+	CCMD5 = "48744463A85DA35E206DDA1DD0AE87E9"
 )
 
 var (
