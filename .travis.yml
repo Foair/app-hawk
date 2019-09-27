@@ -13,20 +13,14 @@ script:
   golang:1.13.1 sh -c '
     export GOROOT_FINAL=/
     for GOOS in darwin linux windows; do
-      if [ $GOOS == windows ]
-      then
-        EXT=.exe
-      else
-        EXT=
-      fi
+      if [ $GOOS == windows ]; then EXT=.exe; else EXT=; fi
       for GOARCH in 386 amd64; do
         export GOOS GOARCH
-        go build -v -o bin/hawk-$GOOS-$GOARCH$EXT
+        go build -o bin/hawk-$GOOS-$GOARCH$EXT
       done
     done
-    GOOS=linux
-    GOARCH=mipsle
-    go build -v -o bin/hawk-$GOOS-$GOARCH'
+    GOOS=linux; GOARCH=mipsle
+    go build -o bin/hawk-$GOOS-$GOARCH'
 - ls *
 deploy:
   provider: releases
