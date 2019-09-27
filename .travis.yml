@@ -30,6 +30,7 @@ script:
 - ls *
 deploy:
   provider: releases
+  all_branches: true
   skip_cleanup: true
   file_glob: true
   api_key:
