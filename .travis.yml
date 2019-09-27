@@ -24,3 +24,5 @@ deploy:
   file: bin/*
   on:
     repo: Foair/app-hawk
+    tags: true
+    branch: master
