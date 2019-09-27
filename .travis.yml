@@ -15,7 +15,7 @@ script:
     for GOOS in darwin linux windows; do
       if [ $GOOS == windows ]; then EXT=.exe; else EXT=; fi
       for GOARCH in 386 amd64; do
-        export GOOS GOARCH
+        export GOOS GOARCH EXT
         go build -o bin/hawk-$GOOS-$GOARCH$EXT
       done
     done
