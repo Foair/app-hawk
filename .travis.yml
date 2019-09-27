@@ -31,4 +31,6 @@ deploy:
   file: bin/*
   on:
     repo: Foair/app-hawk
-    branch: master
+    branches:
+      only:
+        - master
