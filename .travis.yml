@@ -17,6 +17,7 @@ script:
         go build -v -o bin/hawk-$GOOS-$GOARCH
       done
     done'
+  ls *
 deploy:
   provider: releases
   api_key:
