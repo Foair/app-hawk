@@ -31,7 +31,9 @@ func parse(cipher []byte) {
 	decoder.UseNumber()
 	decoder.Decode(&j)
 	// json.Unmarshal(s, &j)
-	update(j.(map[string](interface{})))
+	if j.(map[string]interface{}) != nil {
+		update(j.(map[string]interface{}))
+	}
 }
 
 // 更新信息
