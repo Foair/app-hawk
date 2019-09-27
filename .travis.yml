@@ -29,8 +29,3 @@ deploy:
   api_key:
     secure: HpvlZe+JwNv+xVfinPRvQBfpOqRVJAOgl7+mWZwt4xcaAJwWi1Zex88bflzexkMTNTeOKFJQ8EElQJ11jEx9z9dVpkeMZOZCxgobuRPgc5IsISOQM6lFFv3M3LPqWNKQIQR1w3OeIfPuyz43sXcx5RFqyaILPt9BcLFH1Ws45WD377XV1QOhPQ7lynPI8t4UlGSAHinwYGjSJDD3XFLm0zG8D5KQigI/WLgAbNKHCipSqngwbejQ1WFmyuDtKa0Ev2iJow9l0LdAzhNtkA80rMT9PcweKqL1uPBPZ/sMxk3Ehs0lNMi7wzNIkEGNSxF1NhBStKFDZrZSSfB3hO0cPToKvI1MoP7UmNIlZlFm213q7kb7pXOqlAsfoKHFuluWb52sdoKMb7paFGosX/TV4nQ0Nko2lI664Aa8rfNwkrT943Ys57Y1cPOcel4kv69EoZEZfIWrIpF/yapIQv++8R3uIxqWY3ZJ78wEE7y17CuN3fpGVAfPq4TNAyp7mVybS5Ejk1Tn1EuIbHNqDrfQ5hrtGc1wUN6HC0zt60hzDJa1lvbwoj0yf4xTBIJzoYQCZZ3z5bFAtlNioRAGqi0MLX4bouGAvtir+mcpn9cuqquHsLCIPzyakTBuj7n3SVL79B85/Cy8XHx5EzciFdJ2yXe8Lo32tP/oT3rXxL9XgRg=
   file: bin/*
-  on:
-    repo: Foair/app-hawk
-    branches:
-      only:
-        - master
