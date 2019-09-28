@@ -21,7 +21,6 @@ script:
     done
     GOOS=linux; GOARCH=mipsle
     go build -o bin/hawk-$GOOS-$GOARCH'
-- ls *
 deploy:
   provider: releases
   all_branches: true
